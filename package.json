@@ -1,6 +1,6 @@
 {
   "name": "esc-client-binaries",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "Download ESC client binaries for your OS",
   "main": "src/index.js",
   "scripts": {
