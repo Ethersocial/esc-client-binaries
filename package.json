@@ -1,7 +1,7 @@
 {
-  "name": "ethereum-client-binaries",
-  "version": "1.6.2",
-  "description": "Download Ethereum client binaries for your OS",
+  "name": "esc-client-binaries",
+  "version": "0.1.1",
+  "description": "Download ESC client binaries for your OS",
   "main": "src/index.js",
   "scripts": {
     "test": "mocha --timeout 180000 --ui exports --reporter spec test/*.test.js",
@@ -9,13 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hiddentao/ethereum-client-binaries.git"
+    "url": "git+https://github.com/ethersocial/esc-client-binaries.git"
   },
   "keywords": [
-    "ethereum",
+    "esc",
     "blockchain",
     "client",
-    "geth",
+    "gesc",
     "parity",
     "ethereumj",
     "ethereumjs",
@@ -24,9 +24,9 @@
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hiddentao/ethereum-client-binaries/issues"
+    "url": "https://github.com/ethersocial/esc-client-binaries/issues"
   },
-  "homepage": "https://github.com/hiddentao/ethereum-client-binaries#readme",
+  "homepage": "https://github.com/ethersocial/esc-client-binaries#readme",
   "dependencies": {
     "buffered-spawn": "^3.3.2",
     "got": "^6.5.0",

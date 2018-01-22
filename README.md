@@ -2,9 +2,9 @@
 
 [![Build Status](https://secure.travis-ci.org/hiddentao/ethereum-client-binaries.png?branch=master)](http://travis-ci.org/hiddentao/ethereum-client-binaries) [![NPM module](https://badge.fury.io/js/ethereum-client-binaries.png)](https://badge.fury.io/js/ethereum-client-binaries) [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Follow&maxAge=2592000)](https://twitter.com/hiddentao)
 
-Download Ethereum client binaries for your OS.
+Download ESC client binaries for your OS.
 
-When you wish to run a local Ethereum client node it would be beneficial to first 
+When you wish to run a local ESC client node it would be beneficial to first 
 scan for existing node client binaries on the machine and then download 
 appropriate client binaries if none found. **This package does both.**
 
@@ -13,7 +13,7 @@ e.g. if one wishes to allow a user to select the client software they wish to
 download.
 
 Features:
-* Configurable client types (Geth, Eth, Parity, etc)
+* Configurable client types (Gesc, Eth, Parity, etc)
 * Security: Binary *sanity* checks, URL regex checks, SHA256 hash checks
 * Can scan and download to specific folders
 * Logging can be toggled on/off at runtime
@@ -22,7 +22,7 @@ Features:
 ## Installation
 
 ```shell
-npm install --save ethereum-client-binaries
+npm install --save esc-client-binaries
 ```
 
 ## Usage
@@ -32,26 +32,26 @@ npm install --save ethereum-client-binaries
 First a config object needs to be defined. This specifies the possible clients 
 and the platforms they support. 
 
-For example, a config object which specifies the [Geth client](https://github.com/ethereum/go-ethereum) for only 64-bit Linux platforms and the [Parity client](https://github.com/ethcore/parity) for only 32-bit Windows platforms might be:
+For example, a config object which specifies the [Gesc client](https://github.com/ethersocial/go-esc) for only 64-bit Linux platforms and the [Parity client](https://github.com/ethcore/parity) for only 32-bit Windows platforms might be:
 
 ```js
 const config = {
   "clients": {
-    "Geth": {
+    "Gesc": {
       "platforms": {
         "linux": {
           "x64": {
             "download": {
-              "url": "https://geth.com/latest.tgz",
+              "url": "https://gesc.com/latest.tgz",
               "type": "tar",
-              "bin": "geth-linux-x64",
+              "bin": "gesc-linux-x64",
               "sha256": "8359e8e647b168dbd053ec56438ab4cea8d76bd5153d681d001c5ce1a390401c",
             },
-            "bin": "geth",
+            "bin": "gesc",
             "commands": {
               "sanity": {
                 "args": ["version"],
-                "output": [ "Geth", "1.4.12" ]
+                "output": [ "Gesc", "1.4.12" ]
               }                
             }
           },
@@ -89,7 +89,7 @@ Each *platform-arch* entry needs to specify a `bin` key which holds the name of 
 The `download` key holds the download `url`, the `type` of archive being downloaded, and - optionally - the filename of the binary (`bin`) inside the archive in case it differs from the expected filename of the binary. As a security measure, a `sha256` key equalling the SHA256 hash calculation of the downloadable file may be provided, in which the downloaded file's hash is tested 
 for equality with this value.
 
-The `sanity` command is mandatory and is a way to check a found binary to ensure that is is actually a valid client binary and not something else. In the above config the `sanity` command denotes that running `geth version` should return output containing *both* `Geth` and `1.4.12`.
+The `sanity` command is mandatory and is a way to check a found binary to ensure that is is actually a valid client binary and not something else. In the above config the `sanity` command denotes that running `gesc version` should return output containing *both* `Gesc` and `1.4.12`.
 
 Now we can construct a `Manager` with this config:
 
@@ -115,30 +115,30 @@ mgr.init()
 .catch(process.exit);
 ```
 
-Let's say the current platform is `linux` with an `x64` architecture, and that `geth` has been resolved successfully to `/usr/local/bin/geth`, the `mgr.clients` property will look like:
+Let's say the current platform is `linux` with an `x64` architecture, and that `gesc` has been resolved successfully to `/usr/local/bin/gesc`, the `mgr.clients` property will look like:
 
 ```js
 /*
 [
   {
-    id: 'Geth',
+    id: 'Gesc',
     state: {
       available: true,
     },
     platforms: { .... same as original ... }
     activeCli: {
       "download": {
-        "url": "https://geth.com/latest.tgz",
+        "url": "https://gesc.com/latest.tgz",
         "type": "tar"
       },
-      "bin": "geth",
+      "bin": "gesc",
       "commands": {
         "sanity": {
           "args": ["version"],
-          "output": [ "Geth", "1.4.12" ]
+          "output": [ "Gesc", "1.4.12" ]
         }                
       },
-      fullPath: '/usr/local/bin/geth'
+      fullPath: '/usr/local/bin/gesc'
     }
   }
 ]
@@ -147,7 +147,7 @@ Let's say the current platform is `linux` with an `x64` architecture, and that `
 
 The `state.available` property is the key property to check. If `false` then `state.failReason` will also be set. There are currently two possible values for `state.failReason`:
 
-1. `notFound` - a binary with matching name (`geth` in above example) could not be found.
+1. `notFound` - a binary with matching name (`gesc` in above example) could not be found.
 2. `sanityCheckFail` - a binary with matching name was found, but it failed the sanity check when executed.
 
 The `activeCli.fullPath` property denotes the full path to the resolved client binary - this is only valid if `state.available` is `true`.
@@ -179,7 +179,7 @@ The initial config object specifies where a package can be downloaded from, e.g:
 
 ```js
 "download": {
-  "url": "https://geth.com/latest.tgz",
+  "url": "https://gesc.com/latest.tgz",
   "type": "tar"
 },
 ```
@@ -187,7 +187,7 @@ The initial config object specifies where a package can be downloaded from, e.g:
 To perform the download, specify the client id:
 
 ```js
-mgr.download("Geth")
+mgr.download("Gesc")
 .then(console.log)
 .catch(console.error);
 ```
@@ -200,7 +200,7 @@ The returned result will be an object which looks like:
   downloadFile: /* the downloaded archive file */,
   unpackFolder: /* folder archive was unpacked to */,
   client: {
-    id: 'Geth',
+    id: 'Gesc',
     state: {...},
     platforms: {...},
     activeCli: {...},
@@ -217,7 +217,7 @@ After downloading and unpacking the client binary the sanity check is run agains
 By default the client binary archive will be downloaded to a temporarily created folder. But you can override this using the `downloadFolder` option:
 
 ```js
-mgr.download("Geth", {
+mgr.download("Gesc", {
   downloadFolder: '/path/to/my/folder'
 })
 .then(...)
@@ -254,7 +254,7 @@ initial JSON config object from a remote server.
 This is how you use it:
 
 ```js
-mgr.download("Geth", {
+mgr.download("Gesc", {
   urlRegex: /^https:\/\/ethereum.org\/.+$/
 })
 .then(...)
